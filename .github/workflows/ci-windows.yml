@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  format-lint:
+    name: Code Linting
+    uses: ./.github/workflows/format-lint.yml
+    secrets: inherit
+
+  windows:
+    name: Windows
+    needs:
+      - format-lint
+    uses: ./.github/workflows/windows.yml
+    secrets: inherit
